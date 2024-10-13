@@ -25,13 +25,25 @@ function Navbar(props) {
           </ul>
           <div className="form-check form-switch">
             <input
-              className="form-check-input"
+              className="form-check-input "
               onClick={props.togglemode}
               type="checkbox"
               id="flexSwitchCheckDefault"
             />
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
+            <label className="form-check-label mx-3" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
           </div>
+          
+         
+          <button 
+            className='btn btn-outline-primary' // Use Bootstrap classes for better styling
+            onClick={props.onLogout} // Call the onLogout function when clicked
+            style={{ borderRadius: '5px', padding: '8px 12px' }} // Additional inline styles
+          >
+            Logout
+          </button>
+       
+
+         
         </div>
       </div>
     </nav>
