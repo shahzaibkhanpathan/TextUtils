@@ -31,36 +31,49 @@ const Login = () => {
   };
 
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="container mt-5">
+      {error && <p className="text-danger text-center">{error}</p>}
       
-      <form onSubmit={handleEmailLogin} className='w-25 m-auto'>
-        <h2 className='text-center'>Login</h2>
-        <input 
-          type="email" 
-          className='form-control mt-2 mb-2'
-          placeholder="Email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required 
-        />
-        <input 
-          type="password" 
-          className='form-control mt-2 mb-2'
-          placeholder="Password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required 
-        />
-        <button type="submit" className='btn btn-primary mt-2 form-control'>Login with Email</button>
-        <button className='btn btn-danger form-control' onClick={handleGoogleLogin} style={{ marginTop: '10px' }}>
+      <form onSubmit={handleEmailLogin} className='w-50 m-auto p-4 border rounded shadow'>
+        <h2 className='text-center mb-4'>Login</h2>
+        
+        <div className="form-group">
+          <input 
+            type="email" 
+            className='form-control mb-3'
+            placeholder="Email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <input 
+            type="password" 
+            className='form-control mb-3'
+            placeholder="Password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required 
+          />
+        </div>
+        
+        <button type="submit" className='btn btn-primary w-100 mb-2'>Login with Email</button>
+        
+        <button 
+          type="button" 
+          className='btn btn-danger w-100'
+          onClick={handleGoogleLogin}
+        >
           Login with Google
         </button>
-      </form>
       
       <div className='text-center mt-3'>
-        <Link to="/register">Don't have an account? Register here</Link>
+        <span>Don't have an account? </span>
+        <Link to="/register" className="btn btn-link">Register here</Link>
       </div>
+      </form>
     </div>
   );
 };

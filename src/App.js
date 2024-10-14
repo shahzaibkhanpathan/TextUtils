@@ -33,24 +33,20 @@ function App() {
 
   return (
     <Router>
-      {user && (
-        <Navbar 
-          title="TextUtils" 
-          mode={mode} 
-          togglemode={toggleMode} 
-          onLogout={handleLogout} 
-          user={user} 
-        />
-      )}
+      <Navbar 
+        title="TextUtils" 
+        mode={mode} 
+        togglemode={toggleMode} 
+        onLogout={handleLogout} 
+        user={user} 
+      />
       <div className="container my-4">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> {/* Add Register route */}
+          <Route path="/register" element={<Register />} />
           <Route 
             path="/" 
-            element={
-              user ? <Text_form heading="Enter The Text to Analyze" mode={mode} /> : <Login />
-            } 
+            element={user ? <Text_form heading="Enter The Text to Analyze" mode={mode} /> : <Login />} 
           />
         </Routes>
       </div>
@@ -59,6 +55,3 @@ function App() {
 }
 
 export default App;
-
-
-
