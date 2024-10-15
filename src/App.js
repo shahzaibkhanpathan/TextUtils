@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './Navbar';
 import Text_form from './Text_form';
-import { auth } from './Firebase';
+import { auth, db } from './Firebase'; // Import Firestore instance
+import { doc, getDoc, setDoc } from 'firebase/firestore'; // Firestore functions
 import Login from './Login';
-import Register from './Register'; // Import Register component
+import Register from './Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -12,9 +13,37 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+      if (currentUser) {
+        const userRef = doc(db, 'users', currentUser.uid);
+        const userSnap = await getDoc(userRef);
+
+        // Check if user data exists in Firestore
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setUser({
+            fullName: userData.fullName,
+            photoURL: userData.photoURL,
+            email: userData.email,
+          });
+        } else {
+          // If no user data in Firestore, create a document for Google sign-in users
+          const newUserData = {
+            fullName: currentUser.displayName || "User", // Default to "User" if displayName not available
+            photoURL: currentUser.photoURL,
+            email: currentUser.email,
+          };
+
+          // Save the user data in Firestore
+          await setDoc(userRef, newUserData);
+
+          setUser(newUserData); // Set user state with new data
+        }
+      } else {
+        setUser(null);
+      }
     });
+
     return () => unsubscribe();
   }, []);
 
